@@ -1,8 +1,13 @@
+import axios from 'axios';
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+// const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+// console.log(myProfile);
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +33,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +63,88 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+
+const cards = document.querySelector(".cards");
+
+function cardMaker(data) {
+  const divCard = document.createElement("div");
+  const image = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const nameReal = document.createElement("h3");
+  const userName = document.createElement("p");
+  const locationReal = document.createElement("p");
+  const profile = document.createElement("p");
+  const profileLink = document.createElement("a");
+  const followersReal = document.createElement("p");
+  const followingReal = document.createElement("p");
+  const bioReal = document.createElement("p");
+
+  divCard.classList.add("card");
+  cardInfo.classList.add("card-info");
+  nameReal.classList.add("name");
+  userName.classList.add("username");
+
+  divCard.appendChild(image);
+  divCard.appendChild(cardInfo);
+  cardInfo.appendChild(nameReal);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(locationReal);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followersReal);
+  cardInfo.appendChild(followingReal);
+  cardInfo.appendChild(bioReal);
+  profile.appendChild(profileLink);
+
+  image.src = `${data.avatar_url}`; 
+  nameReal.textContent = `${data.name}`;
+  userName.textContent = `${data.login}`;
+  locationReal.textContent = `${data.location}`;
+  profileLink.href = `${data.html_url}`;
+  followersReal.textContent = `${data.followers}`;
+  followingReal.textContent = `${data.following}`;
+  bioReal.textContent = `${data.bio}`;
+
+  return divCard;
+ }; 
+
+ axios
+  .get("https://api.github.com/users/Vehmeyer")
+  .then((res) => {
+    // debugger;
+    // console.log("RESPONSE: \n \n", res);
+    // console.log("res.data: \n \n", res.data);
+    const user = res.data;
+    const card = cardMaker(user);
+    cards.appendChild(card);
+    })
+  .catch(err => {
+    console.log("error message");
+  })
+
+
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+let userNameForArray = followersArray.forEach((item) => {
+  let url = "https://api.github.com/users/" + item;
+  axios
+    .get(url)
+    .then((res) => {
+        const otherUser = res.data;
+        const otherCard = cardMaker(otherUser);
+        cards.appendChild(otherCard);
+      })
+    .catch(err => {
+     debugger
+     console.log("error message");
+   })
+  });
+
+
+  // const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+  // console.log(myProfile);
+
+  
+ 
+
+
+
