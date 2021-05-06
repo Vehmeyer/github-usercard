@@ -66,7 +66,7 @@ import axios from 'axios';
 
 const cards = document.querySelector(".cards");
 
-function cardMaker({ data_avatar, name, login, location, html_url, followers, following, bio}) {
+function cardMaker({avatar_url, name, login, location, html_url, followers, following, bio}) {
   const divCard = document.createElement("div");
   const image = document.createElement("img");
   const cardInfo = document.createElement("div");
@@ -96,7 +96,7 @@ function cardMaker({ data_avatar, name, login, location, html_url, followers, fo
   profile.appendChild(profileLink);
 
   // VERIFY DATA YOU'RE PASSING IN
-  image.setAttribute("src", `${data_avatar}`); 
+  image.setAttribute("src", `${avatar_url}`); 
   nameReal.textContent = `${name}`;
   userName.textContent = `${login}`;
   locationReal.textContent = `${location}`;
@@ -111,19 +111,26 @@ function cardMaker({ data_avatar, name, login, location, html_url, followers, fo
 
  axios
   .get("https://api.github.com/users/Vehmeyer")
-  //   const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
-  //   console.log(myProfile);
   .then((res) => {
-    // DO YOU NEED TO INCLUDE .MESSAGE?
-    const user = res.data.message;
-    cards.appendChild(user);
-  })
-  .catch((arr) => {
-    console.log("EXPERIENCING ISSUES");
-  });
+    // debugger;
+    // console.log("RESPONSE: \n \n", res);
+    // console.log("res.data: \n \n", res.data);
+    // const user = res.data;
+    const user = cardMaker(res.data);
+    cards.append(user);
+
+    // user.forEach((name) => {
+    //   const userCard = cardMaker({avatar_url, name, login, location, html_url, followers, following, bio});
+    //   cards.appendChild(userCard);
+    });
+  // .catch((err) {
+  //   debugger;
+  //   console.log("EXPERIENCING ISSUES");
+  // })
 
 
 
-
+    // const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+    // console.log(myProfile);
 
   // const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
