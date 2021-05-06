@@ -6,6 +6,9 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 
+// const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+// console.log(myProfile);
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -30,7 +33,7 @@ import axios from 'axios';
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -60,3 +63,67 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+const cards = document.querySelector(".cards");
+
+function cardMaker({ data_avatar, name, login, location, html_url, followers, following, bio}) {
+  const divCard = document.createElement("div");
+  const image = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const nameReal = document.createElement("h3");
+  const userName = document.createElement("p");
+  const locationReal = document.createElement("p");
+  const profile = document.createElement("p");
+  const profileLink = document.createElement("a");
+  const followersReal = document.createElement("p");
+  const followingReal = document.createElement("p");
+  const bioReal = document.createElement("p");
+
+  divCard.classList.add("card");
+  cardInfo.classList.add("card-info");
+  nameReal.classList.add("name");
+  userName.classList.add("username");
+
+  divCard.appendChild(image);
+  divCard.appendChild(cardInfo);
+  cardInfo.appendChild(nameReal);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(locationReal);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followersReal);
+  cardInfo.appendChild(followingReal);
+  cardInfo.appendChild(bioReal);
+  profile.appendChild(profileLink);
+
+  // VERIFY DATA YOU'RE PASSING IN
+  image.setAttribute("src", `${data_avatar}`); 
+  nameReal.textContent = `${name}`;
+  userName.textContent = `${login}`;
+  locationReal.textContent = `${location}`;
+  profileLink.setAttribute("href", `${html_url}`);
+  followersReal.textContent = `${followers}`;
+  followingReal.textContent = `${following}`;
+  bioReal.textContent = `${bio}`;
+
+  return cardMaker;
+
+ } 
+
+ axios
+  .get("https://api.github.com/users/Vehmeyer")
+  //   const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+  //   console.log(myProfile);
+  .then((res) => {
+    // DO YOU NEED TO INCLUDE .MESSAGE?
+    const user = res.data.message;
+    cards.appendChild(user);
+  })
+  .catch((arr) => {
+    console.log("EXPERIENCING ISSUES");
+  });
+
+
+
+
+
+  // const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
