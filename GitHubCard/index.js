@@ -122,20 +122,22 @@ function cardMaker(data) {
     console.log("error message");
   })
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
-axios
-  .get("https://api.github.com/users")
-  .then((res) => {
-    followersArray.forEach((user) => {
-      const otherUser = res.data;
-      const otherCard = cardMaker(otherUser);
-      cards.appendChild(otherCard);
-    })
-  })
-  .catch(err => {
-    console.log("error message");
-  })
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+let userNameForArray = followersArray.forEach((item) => {
+  let url = "https://api.github.com/users/" + item;
+  axios
+    .get(url)
+    .then((res) => {
+        const otherUser = res.data;
+        const otherCard = cardMaker(otherUser);
+        cards.appendChild(otherCard);
+      })
+    .catch(err => {
+     debugger
+     console.log("error message");
+   })
+  });
 
 
   // const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
