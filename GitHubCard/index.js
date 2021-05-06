@@ -64,6 +64,7 @@ import axios from 'axios';
     bigknell
 */
 
+
 const cards = document.querySelector(".cards");
 
 function cardMaker(data) {
@@ -104,34 +105,41 @@ function cardMaker(data) {
   followingReal.textContent = `${data.following}`;
   bioReal.textContent = `${data.bio}`;
 
-
-
   return divCard;
-
- } 
+ }; 
 
  axios
   .get("https://api.github.com/users/Vehmeyer")
   .then((res) => {
     // debugger;
     // console.log("RESPONSE: \n \n", res);
-    console.log("res.data: \n \n", res.data);
+    // console.log("res.data: \n \n", res.data);
     const user = res.data;
     const card = cardMaker(user);
     cards.appendChild(card);
+    })
+  .catch(err => {
+    console.log("error message");
+  })
 
-    // user.forEach((name) => {
+
+
+
+  // const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
+  // console.log(myProfile);
+
+  
+ 
+
+
+      // user.forEach((name) => {
     //   const userCard = cardMaker({avatar_url, name, login, location, html_url, followers, following, bio});
     //   cards.appendChild(userCard);
-    });
-  // .catch((err) {
-  //   debugger;
-  //   console.log("EXPERIENCING ISSUES");
-  // })
 
 
+    // const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
 
-    // const myProfile = axios.get("https://api.github.com/users/Vehmeyer");
-    // console.log(myProfile);
-
-  // const followersArray = [tetondan, dustinmyers, justsml, luishrd, bigknell];
+    // followersArray.forEach((follower) => {
+    //   arrayMaker = cardMaker(res.data);
+    //   cards.appendChild(arrayMaker);  
+    // });
