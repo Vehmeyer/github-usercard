@@ -66,7 +66,7 @@ import axios from 'axios';
 
 const cards = document.querySelector(".cards");
 
-function cardMaker({avatar_url, name, login, location, html_url, followers, following, bio}) {
+function cardMaker(data) {
   const divCard = document.createElement("div");
   const image = document.createElement("img");
   const cardInfo = document.createElement("div");
@@ -95,17 +95,18 @@ function cardMaker({avatar_url, name, login, location, html_url, followers, foll
   cardInfo.appendChild(bioReal);
   profile.appendChild(profileLink);
 
-  // VERIFY DATA YOU'RE PASSING IN
-  image.setAttribute("src", `${avatar_url}`); 
-  nameReal.textContent = `${name}`;
-  userName.textContent = `${login}`;
-  locationReal.textContent = `${location}`;
-  profileLink.setAttribute("href", `${html_url}`);
-  followersReal.textContent = `${followers}`;
-  followingReal.textContent = `${following}`;
-  bioReal.textContent = `${bio}`;
+  image.src = `${data.avatar_url}`; 
+  nameReal.textContent = `${data.name}`;
+  userName.textContent = `${data.login}`;
+  locationReal.textContent = `${data.location}`;
+  profileLink.href = `${data.html_url}`;
+  followersReal.textContent = `${data.followers}`;
+  followingReal.textContent = `${data.following}`;
+  bioReal.textContent = `${data.bio}`;
 
-  return cardMaker;
+
+
+  return divCard;
 
  } 
 
@@ -114,10 +115,10 @@ function cardMaker({avatar_url, name, login, location, html_url, followers, foll
   .then((res) => {
     // debugger;
     // console.log("RESPONSE: \n \n", res);
-    // console.log("res.data: \n \n", res.data);
-    // const user = res.data;
-    const user = cardMaker(res.data);
-    cards.append(user);
+    console.log("res.data: \n \n", res.data);
+    const user = res.data;
+    const card = cardMaker(user);
+    cards.appendChild(card);
 
     // user.forEach((name) => {
     //   const userCard = cardMaker({avatar_url, name, login, location, html_url, followers, following, bio});
